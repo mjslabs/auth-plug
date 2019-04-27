@@ -13,7 +13,7 @@ before_script:
   - test-reporter before-build
 
 script:
-  - go test -coverprofile c.out
+  - go test -coverprofile c.out ./...
 
 after_script:
   - test-reporter after-build --coverage-input-type gocov --exit-code $TRAVIS_TEST_RESULT
