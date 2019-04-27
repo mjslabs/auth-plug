@@ -25,10 +25,10 @@ func Post(c echo.Context) error {
 	}
 
 	authed, user, err := authenticator(username, password)
-	if !authed && err == nil {
-		return echo.ErrUnauthorized
-	} else if !authed && err != nil {
+	if err != nil {
 		return err
+	} else if !authed {
+		return echo.ErrUnauthorized
 	}
 
 	token, err := generator(user)
