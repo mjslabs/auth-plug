@@ -22,11 +22,12 @@ var defaultJWTSecret = "testing12345678"
 var defaultJWTMethod = "HS512"
 
 func TestJWT(t *testing.T) {
-	t.Run("Create", testCreate)
+	t.Run("Create_success", testCreateSuccess)
+	t.Run("Create_error", testCreateError)
 	t.Run("SigningMethods", testSigningMethods)
 }
 
-func testCreate(t *testing.T) {
+func testCreateSuccess(t *testing.T) {
 	Cfg.JWTSecret = defaultJWTSecret
 	token, err := JWTCreateToken(mockUser)
 	if assert.NoError(t, err) {
@@ -43,6 +44,12 @@ func testCreate(t *testing.T) {
 	if _, ok := tokenObj.Claims.(jwt.MapClaims); !ok || !tokenObj.Valid {
 		t.Errorf("failed with error: %s", err)
 	}
+}
+
+func testCreateError(t *testing.T) {
+	Cfg.JWTMethod = "invalid"
+	_, err := JWTCreateToken(mockUser)
+	assert.Error(t, err)
 }
 
 func testSigningMethods(t *testing.T) {
