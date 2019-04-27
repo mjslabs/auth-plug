@@ -3,11 +3,14 @@ auth-plug
 
 [![Build Status][travis-badge]][travis]
 [![Go Report Card][goreport-badge]][goreport]
+[![Test Coverage][coverage]][codeclimate]
 
 [travis-badge]: https://travis-ci.org/mjslabs/auth-plug.svg?branch=master
 [travis]: https://travis-ci.org/mjslabs/auth-plug
 [goreport-badge]: https://goreportcard.com/badge/github.com/mjslabs/auth-plug
 [goreport]: https://goreportcard.com/report/github.com/mjslabs/auth-plug
+[coverage]: https://api.codeclimate.com/v1/badges/4976c6d311f5c4ac37c4/test_coverage
+[codeclimate]: https://codeclimate.com/github/mjslabs/auth-plug/test_coverage
 
 Small Go service that takes LDAP logins and hands out JWTs. Very useful for adding
 authentication to an otherwise unsecured API, and easily adaptable to other authentication methods.
