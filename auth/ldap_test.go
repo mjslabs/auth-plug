@@ -27,7 +27,8 @@ func (l MockLDAP) Authenticate(username string, password string) (bool, map[stri
 	} else if username == "gimmie" && password == "anerror" {
 		return false, map[string]string{}, errors.New("the server can't be found")
 	}
-	return false, map[string]string{}, nil
+	// go-ldap-client returns an error with this string on failed login
+	return false, map[string]string{}, errors.New("Invalid Credentials")
 }
 
 // Close mocks the method of the same name from LDAPClient
@@ -63,7 +64,7 @@ func TestLDAP(t *testing.T) {
 }
 
 func testErrored(t *testing.T) {
-	// Failed login
+	// Error on login
 	valid, _, err := ValidateLogin("gimmie", "anerror")
 	assert.Equal(t, valid, false)
 	assert.NotNil(t, err)
