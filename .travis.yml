@@ -6,7 +6,7 @@ env:
 go:
   - 1.12.x
 
-gobuild_args: -v -coverprofile c.out ./...
+gobuild_args: -v -coverprofile c.out
 
 install:
   - GO111MODULE=off go get -v github.com/codeclimate/test-reporter
