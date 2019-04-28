@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -62,13 +64,20 @@ func main() {
 
 	// Start server
 	go func() {
-		if err := e.Start(os.Getenv("AUTH_IP") + ":" + os.Getenv("AUTH_PORT")); err != nil {
+		s := &http.Server{
+			Addr:         os.Getenv("AUTH_IP") + ":" + os.Getenv("AUTH_PORT"),
+			ReadTimeout:  5 * time.Second,
+			WriteTimeout: 5 * time.Second,
+			IdleTimeout:  5 * time.Second,
+		}
+
+		if err := e.StartServer(s); err != nil {
 			e.Logger.Errorf("error starting server: %s", err)
 		}
 	}()
 
 	// Graceful server shutdown
-	signal.Notify(quit, os.Interrupt)
+	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
