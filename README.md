@@ -95,3 +95,5 @@ Caveats
 auth-plug only does authentication, **not** authorization. Future versions will support some form of authz control (e.g. [casbin](https://github.com/casbin/casbin)).
 
 A standard use-case for auth-plug is running on localhost with the LDAP server and nginx. Full TLS support is yet to be implemented.
+
+[go-ldap-client](https://github.com/jtblin/go-ldap-client) is used for the LDAP work. This library seems to be abandoned and should be changed out for something that is actively maintained.
