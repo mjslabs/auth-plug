@@ -67,6 +67,9 @@ Use STARTTLS to connect to the LDAP server.
 The LDAP attribute that maps a user to a group.  
 This functionality is not yet implemented.
 
+**AUTH_LDAP_TIMEOUT_SECS** _default: 3_  
+The number of seconds to wait for the LDAP server to respond.
+
 **AUTH_LDAP_UID_NAME** _default: uid_  
 The LDAP attribute that contains the username.
 
