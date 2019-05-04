@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/jtblin/go-ldap-client"
+	"github.com/c0sco/go-ldap-client"
 	"github.com/oleiade/reflections"
 	"github.com/stretchr/testify/assert"
 )
