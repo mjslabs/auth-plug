@@ -3,9 +3,10 @@ package auth
 import (
 	"reflect"
 	"strings"
+	"time"
 
+	"github.com/c0sco/go-ldap-client"
 	"github.com/caarlos0/env"
-	"github.com/jtblin/go-ldap-client"
 	"github.com/labstack/gommon/log"
 	"github.com/mitchellh/mapstructure"
 )
@@ -22,6 +23,7 @@ type ServerAttributes struct {
 	StartTLS     bool     `env:"AUTH_LDAP_START_TLS" envDefault:"false"`
 	UIDFieldName string   `env:"AUTH_LDAP_UID_NAME" envDefault:"uid"`
 	GIDFieldName string   `env:"AUTH_LDAP_GID_NAME" envDefault:"memberUid"`
+	Timeout      int      `env:"AUTH_LDAP_TIMEOUT_SECS" envDefault:"3"`
 	Fields       []string // Populated based on the mapstructure tags in User
 }
 
@@ -45,6 +47,7 @@ func InitializeServer(c *Configuration) {
 		UserFilter:   "(" + Cfg.Serv.UIDFieldName + "=%s)",
 		GroupFilter:  "(" + Cfg.Serv.GIDFieldName + "=%s)",
 		Attributes:   Cfg.Serv.Fields,
+		Timeout:      time.Duration(Cfg.Serv.Timeout) * time.Second,
 	}
 	if err := c.Serv.Conn.Connect(); err != nil {
 		log.Error(err)
