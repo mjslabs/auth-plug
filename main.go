@@ -14,6 +14,7 @@ import (
 	"github.com/mjslabs/auth-plug/auth"
 	"github.com/mjslabs/auth-plug/login"
 	"github.com/mjslabs/auth-plug/verify"
+	"github.com/mmcloughlin/professor"
 )
 
 type methodMap map[string]func(c echo.Context) error
@@ -43,6 +44,12 @@ var routes = []RouteDef{
 		},
 		restricted: true,
 	},
+	{
+		path: "/health",
+		methods: methodMap{
+			"GET": healthGet,
+		},
+	},
 }
 
 // When sigint is sent to this, the server will attempt a clean shutdown
@@ -51,6 +58,11 @@ var quit = make(chan os.Signal)
 func main() {
 	// Echo instance
 	e := echo.New()
+
+	// pprof launcher
+	if os.Getenv("AUTH_PROFILE") != "" {
+		professor.Launch(os.Getenv("AUTH_PROFILE"))
+	}
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())

@@ -76,16 +76,43 @@ The LDAP attribute that contains the username.
 **AUTH_PORT** _required_  
 The port to bind to.
 
+**AUTH_PROFILE**  
+The `[ip]:<port>` for a pprof web server to listen on.  
+This then enables the standard set of `/debug` pprof endpoints.
+
 Usage
 ---
 
-These are the endpoints that are defined.
+auth-plug follows a familiar flow.
+
+1. POST a `username` and `password` to `/login`.
+2. Retrieve the JWT from the response.
+3. Send a GET to `/verify`, setting the JWT from step 2 in the `Authorization` header.
+4. If step 3 fails, go back to step 1.
+
+Here is a full list of defined endpoints.
 
 **/login** _POST_  
 Takes a `username` and `password` as post data, validates it against the LDAP server, and sends back a JWT.
 
 **/verify** _GET_  
 Returns `OK` if a valid `Authorization` header w/ JWT (type `Bearer`) is supplied and the JWT is validated.
+
+**/health** _GET_  
+Returns an HTTP 200 on healthy and HTTP 503 if an error is found with the service.  
+Always returns a JSON structure with a `status` key.
+
+Healthy
+
+```JSON
+{"status":"OK"}
+```
+
+Unhealthy (e.g.)
+
+```JSON
+{"status":"LDAP Result Code 200 \"Network Error\": dial tcp: lookup bad.examplehost.com: no such host"}
+```
 
 I don't want to use LDAP
 ---

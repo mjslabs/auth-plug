@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"io"
+	"net/http"
 	"os"
 	"reflect"
 	"runtime"
@@ -17,6 +18,8 @@ import (
 // Port to start the web server on for testing
 var testPortSuccess = "13337"
 
+var testPortPprof = "6060"
+
 // Port to start the web server on for testing failures
 var testPortFail = "65536"
 
@@ -24,7 +27,9 @@ func TestMain(t *testing.T) {
 	t.Run("SetupRoutes", testSetupRoutes)
 	// The next two functions capture main()'s stdout, implementing
 	// a timeout in case something goes wrong
+	os.Setenv("AUTH_PROFILE", ":"+testPortPprof)
 	t.Run("Main", testMainSuccess)
+	os.Setenv("AUTH_PROFILE", "")
 	t.Run("Main_fail", testMainFail)
 }
 
@@ -60,6 +65,9 @@ func testMainSuccess(t *testing.T) {
 	go main()
 	time.Sleep(time.Second * 3)
 
+	// Check the pprof page while we're here
+	pprofResp, pprofErr := http.Get("http://localhost:" + testPortPprof + "/debug/pprof/")
+
 	select {
 	case quit <- syscall.SIGINT:
 	case <-timer:
@@ -69,6 +77,8 @@ func testMainSuccess(t *testing.T) {
 	resetStdout(w, old)
 	out := <-outC
 	assert.Contains(t, out, "http server started on [::]:"+testPortSuccess)
+	assert.Equal(t, pprofResp.StatusCode, http.StatusOK)
+	assert.NoError(t, pprofErr)
 }
 
 func testSetupRoutes(t *testing.T) {
