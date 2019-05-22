@@ -4,6 +4,7 @@ auth-plug
 [![Build Status][travis-badge]][travis]
 [![Go Report Card][goreport-badge]][goreport]
 [![Test Coverage][coverage]][codeclimate]
+[![FOSSA Status][fossa-badge]][fossa]
 
 [travis-badge]: https://travis-ci.org/mjslabs/auth-plug.svg?branch=master
 [travis]: https://travis-ci.org/mjslabs/auth-plug
@@ -11,6 +12,8 @@ auth-plug
 [goreport]: https://goreportcard.com/report/github.com/mjslabs/auth-plug
 [coverage]: https://api.codeclimate.com/v1/badges/4976c6d311f5c4ac37c4/test_coverage
 [codeclimate]: https://codeclimate.com/github/mjslabs/auth-plug/test_coverage
+[fossa-badge]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmjslabs%2Fauth-plug.svg?type=shield
+[fossa]: https://app.fossa.com/projects/git%2Bgithub.com%2Fmjslabs%2Fauth-plug?ref=badge_shield
 
 Small Go service that takes LDAP logins and hands out JWTs. Very useful for adding
 authentication to an otherwise unsecured API, and easily adaptable to other authentication methods.
