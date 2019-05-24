@@ -21,11 +21,17 @@ authentication to an otherwise unsecured API, and easily adaptable to other auth
 Build and Test
 ---
 
-Standard Go build and test methods apply. Uses modules (Go 1.11+).
+This project uses Go and make to build and test. Go 1.11+ is required for the use of Go modules.
 
 ```bash
-go test -cover ./...
-go build -o auth-plug
+# Run tests
+make test
+
+# Run the standard build process
+make build
+
+# Build a statically linked binary for release
+make static
 ```
 
 Configure and Run
