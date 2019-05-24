@@ -17,6 +17,8 @@ import (
 	"github.com/mmcloughlin/professor"
 )
 
+var version = "undefined"
+
 type methodMap map[string]func(c echo.Context) error
 
 // RouteDef defines the structure of a route to register

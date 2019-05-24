@@ -18,6 +18,7 @@ func healthGet(c echo.Context) error {
 	}
 
 	return c.JSON(status, map[string]string{
-		"status": statusMsg,
+		"status":  statusMsg,
+		"version": version,
 	})
 }
