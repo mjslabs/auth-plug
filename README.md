@@ -21,7 +21,8 @@ authentication to an otherwise unsecured API, and easily adaptable to other auth
 Build and Test
 ---
 
-This project uses Go and make to build and test. Go 1.11+ is required for the use of Go modules.
+This project is made with Go, and so requires Go to build and test. Go 1.11+ is required due to the use of Go modules.
+A Makefile is also provided for convenience.
 
 ```bash
 # Run tests
